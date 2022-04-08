@@ -1,0 +1,26 @@
+Since there is only one replica configured for the Deployment. First we should scale the deployment and make the replica to 2
+
+Assume 'nginx-deployment' is the deployment name, execute the below command to increase the replicas from 1 to 2
+#######################
+kubectl scale --replicas=2 deployment nginx-deployment -n <Namespace>
+
+Once the scaling is completed, make sure the number of PODs are now 2 using the below command
+
+kubectl get pods -n <Namespace>
+
+Now there are two ways to change the image name, 
+  a) By editing the deployment using 'kubectl edit' command
+  ===========================================================
+  1. kubectl edit deploy nginx-deployment -n <NameSpace>
+  2. Now we will get a popup, edit the image now and save
+  3. Once step 2 is completed, the POD will get recreated one after the other. So always one POD will be there to handle the requests
+  
+  b) By modifying  the yaml and running 'kubectl apply' command
+  1. Open the deployment.yaml file
+  2. Modify the image name
+  3. Run, the below command
+    kubectl apply -f deployment.yaml -n <NameSpace>
+    Once step 2 is completed, the POD will get recreated one after the other. So always one POD will be there to handle the requests
+    
+ Now we can scale down the replicas to 1 as the upgrade is completed using the below command
+ kubectl scale --replicas=1 deployment nginx-deployment -n <Namespace>
