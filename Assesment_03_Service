@@ -1,0 +1,15 @@
+1) Login to Kubernetes Master or the node from we can run 'kubectl' command
+2) Check the service using the below command
+  kubectl get svc -n <NameSpace>
+3) Check if the Nodeport service is running
+4) If it is running, first try to run a curl command using the <Master IP>:<NodePort>
+5) If the above is not working, run curl command with the Cluster IP and port 8000
+6) If above is also not working, then describe the POD and check the label using the 'kubectl describe svc' command
+7) Assume the label is 'app=web-ui', Now based on the label identify the POD using the below command
+  kubectl get pods -n <Namespace> --show-labels | grep 'app=web-ui'
+8) Now we got the POD based on label, first check what is the POD state
+9) If the POD state is in running, then login to POD using 'kubectl exec' and 
+  a) Check if the POD is listening on the port as defined
+  b) check the application log to identify the issue
+
+We should be able to identify the issue with the above steps.
